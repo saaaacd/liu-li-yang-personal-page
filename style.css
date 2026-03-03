@@ -1,0 +1,473 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+    --bg-color: #030303;
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAAAAA;
+    --accent-color: #A358FF;
+    --font-display: 'Syne', sans-serif;
+    --font-script: 'Playfair Display', serif;
+    --font-ui: 'Inter', sans-serif;
+
+    /* Fluid spacing scale */
+    --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+    --space-sm: clamp(0.75rem, 2vw, 1.25rem);
+    --space-md: clamp(1rem, 3vw, 2rem);
+    --space-lg: clamp(1.5rem, 4vw, 3rem);
+    --space-xl: clamp(2rem, 5vw, 4rem);
+
+    /* Fluid type scale */
+    --text-xs: clamp(0.6rem, 1vw, 0.75rem);
+    --text-sm: clamp(0.75rem, 1.5vw, 0.9rem);
+    --text-base: clamp(0.875rem, 2vw, 1rem);
+    --text-lg: clamp(1rem, 2.5vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 3vw, 1.75rem);
+
+    /* Fluid hero names */
+    --name-size: clamp(4.5rem, 18vw, 17rem);
+
+    /* Fluid script overlay */
+    --script-size: clamp(1.8rem, 5.5vw, 5.5rem);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   DECORATIVE LAYERS
+   ============================================================ */
+
+/* Noise texture */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.07;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+}
+
+/* Ambient gradient blob */
+.gradient-blob {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: clamp(300px, 70vw, 900px);
+    height: clamp(300px, 70vw, 900px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(163, 88, 255, 0.18) 0%, rgba(5, 5, 5, 0) 65%);
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: pulseBlob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseBlob {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.12);
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg) var(--space-xl);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(3, 3, 3, 0);
+    transition: background 0.4s ease, padding 0.4s ease;
+}
+
+header.scrolled {
+    background: rgba(3, 3, 3, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-sm);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+}
+
+.icon {
+    color: var(--accent-color);
+    font-size: 1.1em;
+    display: inline-block;
+    animation: spinStar 8s linear infinite;
+}
+
+@keyframes spinStar {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.availability {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0.4em 0.9em;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: var(--text-xs);
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    background-color: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: clamp(5rem, 12vh, 9rem);
+    padding-bottom: clamp(6rem, 14vh, 10rem);
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    position: relative;
+    z-index: 2;
+}
+
+/* Parallax target — JS moves this on mousemove */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition: transform 0.25s ease-out;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* ───── Name headings ───── */
+.first-name,
+.last-name {
+    font-family: var(--font-display);
+    font-size: var(--name-size);
+    line-height: 0.85;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translateY(60px);
+    animation: slideUpTitle 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    word-break: break-word;
+    hyphens: none;
+    font-weight: 800;
+}
+
+.last-name {
+    animation-delay: 0.15s;
+}
+
+/* ───── Italic script overlay ───── */
+.floating-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-6deg);
+    font-family: var(--font-script);
+    font-size: var(--script-size);
+    font-style: italic;
+    color: var(--accent-color);
+    white-space: nowrap;
+    z-index: 3;
+    opacity: 0;
+    text-shadow: 0 4px 30px rgba(163, 88, 255, 0.45);
+    animation: fadeInRotate 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
+    pointer-events: none;
+}
+
+/* ============================================================
+   TIME BADGE
+   ============================================================ */
+.time-container {
+    position: fixed;
+    bottom: clamp(1.5rem, 5vh, 4rem);
+    right: clamp(1rem, 5vw, 4rem);
+    background: rgba(10, 10, 10, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: 20px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    opacity: 0;
+    animation: slideUpBadge 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    z-index: 90;
+    max-width: min(320px, 88vw);
+}
+
+.time-container:hover {
+    border-color: rgba(163, 88, 255, 0.45);
+    box-shadow: 0 10px 50px rgba(163, 88, 255, 0.22);
+    transform: translateY(-5px) scale(1.02);
+}
+
+.time-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.35em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.time-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+    color: var(--text-primary);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.time-date {
+    font-size: var(--text-sm);
+    color: var(--accent-color);
+    margin-top: 0.35em;
+    font-family: var(--font-script);
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+@keyframes slideUpTitle {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpBadge {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRotate {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-12deg) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-6deg) scale(1);
+    }
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+
+   xs  — < 480px    (small phones)
+   sm  — 480–767px  (large phones / small tablets)
+   md  — 768–1023px (tablets / landscape phones)
+   lg  — ≥ 1024px   (desktops – default styles above)
+   ============================================================ */
+
+/* ── xs: small phones ── */
+@media (max-width: 479px) {
+    :root {
+        --name-size: clamp(3.5rem, 22vw, 5.5rem);
+        --script-size: clamp(1.4rem, 8vw, 2rem);
+    }
+
+    header {
+        padding: var(--space-sm) var(--space-md);
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+
+    .availability span {
+        display: none;
+        /* hide text, keep dot on tiny screens */
+    }
+
+    .hero {
+        padding-bottom: 8rem;
+    }
+
+    .time-container {
+        left: 50%;
+        right: auto;
+        bottom: 1rem;
+        transform: translateX(-50%);
+        align-items: center;
+        animation: slideUpBadgeCenter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
+    }
+
+    .time-container:hover {
+        transform: translateX(-50%) translateY(-5px);
+    }
+
+    @keyframes slideUpBadgeCenter {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+}
+
+/* ── sm: large phones / small tablets ── */
+@media (min-width: 480px) and (max-width: 767px) {
+    :root {
+        --name-size: clamp(4rem, 20vw, 7rem);
+        --script-size: clamp(1.6rem, 6.5vw, 3rem);
+    }
+
+    header {
+        padding: var(--space-sm) var(--space-lg);
+    }
+
+    .hero {
+        padding-bottom: 7rem;
+    }
+
+    .time-container {
+        right: clamp(1rem, 4vw, 2rem);
+        bottom: 1.25rem;
+    }
+}
+
+/* ── md: tablets / landscape phones ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+        --name-size: clamp(5rem, 16vw, 10rem);
+        --script-size: clamp(2rem, 5.5vw, 4rem);
+    }
+
+    header {
+        padding: var(--space-md) var(--space-xl);
+    }
+
+    .time-container {
+        right: clamp(1.5rem, 4vw, 3rem);
+        bottom: clamp(2rem, 4vh, 3rem);
+    }
+}
+
+/* ── Disable parallax on touch devices (no hover/mouse) ── */
+@media (hover: none) and (pointer: coarse) {
+    .hero-content {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* ── Respect reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
