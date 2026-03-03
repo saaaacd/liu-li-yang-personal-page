@@ -80,7 +80,7 @@ No build step required. Simply open the file in a browser:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/liu-li-yang-personal-page.git
+git clone https://github.com/saaaacd/liu-li-yang-personal-page.git
 
 # Open in browser
 start index.html   # Windows
