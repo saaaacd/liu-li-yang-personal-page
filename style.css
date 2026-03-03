@@ -2,33 +2,23 @@
    DESIGN TOKENS
    ============================================================ */
 :root {
-    --bg-color: #030303;
-    --text-primary: #FFFFFF;
-    --text-secondary: #AAAAAA;
-    --accent-color: #A358FF;
+    --bg: #030303;
+    --accent1: #A358FF;
+    --accent2: #06b6d4;
+    --accent3: #f43f5e;
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --text: #e2e8f0;
+    --muted: #64748b;
+
     --font-display: 'Syne', sans-serif;
     --font-script: 'Playfair Display', serif;
     --font-ui: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
-    /* Fluid spacing scale */
-    --space-xs: clamp(0.5rem, 1vw, 0.75rem);
-    --space-sm: clamp(0.75rem, 2vw, 1.25rem);
-    --space-md: clamp(1rem, 3vw, 2rem);
-    --space-lg: clamp(1.5rem, 4vw, 3rem);
-    --space-xl: clamp(2rem, 5vw, 4rem);
-
-    /* Fluid type scale */
-    --text-xs: clamp(0.6rem, 1vw, 0.75rem);
-    --text-sm: clamp(0.75rem, 1.5vw, 0.9rem);
-    --text-base: clamp(0.875rem, 2vw, 1rem);
-    --text-lg: clamp(1rem, 2.5vw, 1.25rem);
-    --text-xl: clamp(1.25rem, 3vw, 1.75rem);
-
-    /* Fluid hero names */
-    --name-size: clamp(4.5rem, 18vw, 17rem);
-
-    /* Fluid script overlay */
-    --script-size: clamp(1.8rem, 5.5vw, 5.5rem);
+    /* Fluid type */
+    --name-size: clamp(3rem, 10vw, 7rem);
+    --script-size: clamp(1.2rem, 3.5vw, 2.8rem);
 }
 
 /* ============================================================
@@ -37,9 +27,9 @@
 *,
 *::before,
 *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html {
@@ -47,12 +37,11 @@ html {
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
     font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -67,8 +56,8 @@ body {
     inset: 0;
     pointer-events: none;
     z-index: 50;
-    opacity: 0.07;
-    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    opacity: 0.06;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
 }
 
 /* Ambient gradient blob */
@@ -76,11 +65,11 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: clamp(300px, 70vw, 900px);
-    height: clamp(300px, 70vw, 900px);
+    width: clamp(300px, 65vw, 800px);
+    height: clamp(300px, 65vw, 800px);
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(163, 88, 255, 0.18) 0%, rgba(5, 5, 5, 0) 65%);
-    z-index: 1;
+    background: radial-gradient(circle, rgba(163, 88, 255, 0.15) 0%, transparent 65%);
+    z-index: 0;
     pointer-events: none;
     border-radius: 50%;
     filter: blur(80px);
@@ -99,6 +88,75 @@ body {
     }
 }
 
+/* Animated radial background */
+.bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse at 15% 20%, rgba(163, 88, 255, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 75%, rgba(6, 182, 212, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(244, 63, 94, 0.08) 0%, transparent 60%),
+        var(--bg);
+}
+
+/* Floating orbs */
+.orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: drift 12s ease-in-out infinite alternate;
+}
+
+.orb1 {
+    width: 550px;
+    height: 550px;
+    top: -15%;
+    left: -10%;
+    background: var(--accent1);
+    animation-duration: 14s;
+}
+
+.orb2 {
+    width: 400px;
+    height: 400px;
+    bottom: -10%;
+    right: -8%;
+    background: var(--accent2);
+    animation-duration: 10s;
+    animation-delay: -4s;
+}
+
+.orb3 {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 55%;
+    background: var(--accent3);
+    animation-duration: 18s;
+    animation-delay: -7s;
+}
+
+@keyframes drift {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(30px, 25px) scale(1.08);
+    }
+}
+
+/* Particles canvas */
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* ============================================================
    HEADER
    ============================================================ */
@@ -106,8 +164,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-lg) var(--space-xl);
-    font-size: var(--text-sm);
+    padding: clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 3rem);
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
     letter-spacing: 0.08em;
     font-weight: 500;
     position: fixed;
@@ -123,20 +181,19 @@ header.scrolled {
     background: rgba(3, 3, 3, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding-top: var(--space-sm);
-    padding-bottom: var(--space-sm);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: 0.5rem;
     font-family: var(--font-ui);
-    font-size: var(--text-sm);
 }
 
 .icon {
-    color: var(--accent-color);
+    color: var(--accent1);
     font-size: 1.1em;
     display: inline-block;
     animation: spinStar 8s linear infinite;
@@ -151,14 +208,14 @@ header.scrolled {
 .availability {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: 0.5rem;
     padding: 0.4em 0.9em;
     border-radius: 99px;
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: var(--text-xs);
+    font-size: clamp(0.6rem, 1vw, 0.75rem);
 }
 
 .dot {
@@ -189,61 +246,144 @@ header.scrolled {
 }
 
 /* ============================================================
-   HERO SECTION
+   LAYOUT
    ============================================================ */
-.hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding-top: clamp(5rem, 12vh, 9rem);
-    padding-bottom: clamp(6rem, 14vh, 10rem);
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
+main {
     position: relative;
     z-index: 2;
-}
-
-/* Parallax target — JS moves this on mousemove */
-.hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    transition: transform 0.25s ease-out;
+    justify-content: center;
+    min-height: 100vh;
+    padding: clamp(6rem, 14vh, 10rem) 20px 40px;
+    gap: 36px;
 }
 
+/* ============================================================
+   HERO CARD
+   ============================================================ */
+.hero-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 28px;
+    padding: 56px 64px;
+    max-width: 760px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 1s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent1), var(--accent2), transparent);
+    border-radius: 4px;
+}
+
+/* ── Avatar ring ── */
+.avatar-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.avatar-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.avatar-inner {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #fff;
+    z-index: 1;
+    border: 4px solid var(--bg);
+    font-family: var(--font-display);
+}
+
+/* ── Name display (Adelina-style split) ── */
 .title-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    margin-bottom: 10px;
 }
 
-/* ───── Name headings ───── */
 .first-name,
 .last-name {
     font-family: var(--font-display);
     font-size: var(--name-size);
-    line-height: 0.85;
-    text-transform: uppercase;
-    margin: 0;
-    text-align: center;
-    color: var(--text-primary);
-    opacity: 0;
-    transform: translateY(60px);
-    animation: slideUpTitle 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    word-break: break-word;
-    hyphens: none;
     font-weight: 800;
+    line-height: 0.9;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .last-name {
     animation-delay: 0.15s;
 }
 
-/* ───── Italic script overlay ───── */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Italic script overlay */
 .floating-text {
     position: absolute;
     top: 50%;
@@ -252,97 +392,13 @@ header.scrolled {
     font-family: var(--font-script);
     font-size: var(--script-size);
     font-style: italic;
-    color: var(--accent-color);
+    color: var(--accent1);
     white-space: nowrap;
     z-index: 3;
     opacity: 0;
     text-shadow: 0 4px 30px rgba(163, 88, 255, 0.45);
     animation: fadeInRotate 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
     pointer-events: none;
-}
-
-/* ============================================================
-   TIME BADGE
-   ============================================================ */
-.time-container {
-    position: fixed;
-    bottom: clamp(1.5rem, 5vh, 4rem);
-    right: clamp(1rem, 5vw, 4rem);
-    background: rgba(10, 10, 10, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 3vw, 2.5rem);
-    border-radius: 20px;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    opacity: 0;
-    animation: slideUpBadge 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
-    z-index: 90;
-    max-width: min(320px, 88vw);
-}
-
-.time-container:hover {
-    border-color: rgba(163, 88, 255, 0.45);
-    box-shadow: 0 10px 50px rgba(163, 88, 255, 0.22);
-    transform: translateY(-5px) scale(1.02);
-}
-
-.time-label {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    letter-spacing: 0.15em;
-    margin-bottom: 0.35em;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.time-value {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4.5vw, 2.5rem);
-    color: var(--text-primary);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.02em;
-}
-
-.time-date {
-    font-size: var(--text-sm);
-    color: var(--accent-color);
-    margin-top: 0.35em;
-    font-family: var(--font-script);
-    font-style: italic;
-    font-weight: 600;
-}
-
-/* ============================================================
-   KEYFRAME ANIMATIONS
-   ============================================================ */
-@keyframes slideUpTitle {
-    from {
-        opacity: 0;
-        transform: translateY(60px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUpBadge {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 @keyframes fadeInRotate {
@@ -357,110 +413,224 @@ header.scrolled {
     }
 }
 
+.tagline {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+}
+
+.divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    border-radius: 4px;
+    margin: 0 auto 32px;
+}
+
+.bio {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   CLOCK CARD
+   ============================================================ */
+.clock-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 22px;
+    padding: 32px 48px;
+    text-align: center;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.35);
+    animation: cardIn 1s cubic-bezier(.22, 1, .36, 1) 0.15s both;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.clock-card:hover {
+    border-color: rgba(163, 88, 255, 0.45);
+    box-shadow: 0 10px 50px rgba(163, 88, 255, 0.22);
+    transform: translateY(-5px) scale(1.02);
+}
+
+.clock-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+}
+
+#clock-time {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 7vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent2), #fff, var(--accent1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+#clock-date {
+    font-size: 1rem;
+    color: var(--accent1);
+    letter-spacing: 1px;
+    font-family: var(--font-script);
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Seconds bar */
+.seconds-bar-wrap {
+    margin-top: 18px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#seconds-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    border-radius: 4px;
+    transition: width 0.9s linear;
+    width: 0%;
+}
+
+/* ============================================================
+   INFO PILLS
+   ============================================================ */
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    animation: cardIn 1s cubic-bezier(.22, 1, .36, 1) 0.3s both;
+}
+
+.pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 100px;
+    padding: 8px 22px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
+    transition: all 0.25s ease;
+}
+
+.pill:hover {
+    background: rgba(163, 88, 255, 0.18);
+    border-color: rgba(163, 88, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(163, 88, 255, 0.2);
+}
+
+.pill-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding-bottom: 28px;
+    letter-spacing: 0.5px;
+    animation: cardIn 1s cubic-bezier(.22, 1, .36, 1) 0.45s both;
+}
+
+footer span {
+    color: var(--accent1);
+}
+
 /* ============================================================
    RESPONSIVE BREAKPOINTS
-
-   xs  — < 480px    (small phones)
-   sm  — 480–767px  (large phones / small tablets)
-   md  — 768–1023px (tablets / landscape phones)
-   lg  — ≥ 1024px   (desktops – default styles above)
    ============================================================ */
 
-/* ── xs: small phones ── */
+/* xs: small phones */
 @media (max-width: 479px) {
     :root {
-        --name-size: clamp(3.5rem, 22vw, 5.5rem);
-        --script-size: clamp(1.4rem, 8vw, 2rem);
+        --name-size: clamp(2.2rem, 16vw, 3.5rem);
+        --script-size: clamp(0.9rem, 5vw, 1.4rem);
     }
 
     header {
-        padding: var(--space-sm) var(--space-md);
+        padding: 0.75rem 1rem;
         flex-wrap: wrap;
-        gap: var(--space-xs);
+        gap: 0.5rem;
     }
 
     .availability span {
         display: none;
-        /* hide text, keep dot on tiny screens */
     }
 
-    .hero {
-        padding-bottom: 8rem;
+    .hero-card {
+        padding: 36px 20px;
     }
 
-    .time-container {
-        left: 50%;
-        right: auto;
-        bottom: 1rem;
-        transform: translateX(-50%);
-        align-items: center;
-        animation: slideUpBadgeCenter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
-    }
-
-    .time-container:hover {
-        transform: translateX(-50%) translateY(-5px);
-    }
-
-    @keyframes slideUpBadgeCenter {
-        from {
-            opacity: 0;
-            transform: translateX(-50%) translateY(30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+    .clock-card {
+        padding: 24px 20px;
     }
 }
 
-/* ── sm: large phones / small tablets ── */
+/* sm: large phones */
 @media (min-width: 480px) and (max-width: 767px) {
     :root {
-        --name-size: clamp(4rem, 20vw, 7rem);
-        --script-size: clamp(1.6rem, 6.5vw, 3rem);
+        --name-size: clamp(2.8rem, 14vw, 5rem);
+        --script-size: clamp(1rem, 4.5vw, 2rem);
     }
 
-    header {
-        padding: var(--space-sm) var(--space-lg);
+    .hero-card {
+        padding: 40px 28px;
     }
 
-    .hero {
-        padding-bottom: 7rem;
-    }
-
-    .time-container {
-        right: clamp(1rem, 4vw, 2rem);
-        bottom: 1.25rem;
+    .clock-card {
+        padding: 28px 24px;
     }
 }
 
-/* ── md: tablets / landscape phones ── */
+/* md: tablets */
 @media (min-width: 768px) and (max-width: 1023px) {
     :root {
-        --name-size: clamp(5rem, 16vw, 10rem);
-        --script-size: clamp(2rem, 5.5vw, 4rem);
-    }
-
-    header {
-        padding: var(--space-md) var(--space-xl);
-    }
-
-    .time-container {
-        right: clamp(1.5rem, 4vw, 3rem);
-        bottom: clamp(2rem, 4vh, 3rem);
+        --name-size: clamp(3.5rem, 12vw, 6rem);
+        --script-size: clamp(1.4rem, 4vw, 2.5rem);
     }
 }
 
-/* ── Disable parallax on touch devices (no hover/mouse) ── */
+/* Disable parallax on touch */
 @media (hover: none) and (pointer: coarse) {
-    .hero-content {
+    .hero-card {
         transition: none !important;
         transform: none !important;
     }
 }
 
-/* ── Respect reduced-motion preference ── */
+/* Respect reduced-motion */
 @media (prefers-reduced-motion: reduce) {
 
     *,

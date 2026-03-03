@@ -4,17 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIU LI-YANG</title>
-  <meta name="description"
-    content="LIU LI-YANG — Designer, Engineer, Creator. A personal portfolio page inspired by the Hostinger Adelina template." />
-
-  <!-- Fonts -->
+  <title>LIU LI-YANG — Personal Page</title>
+  <meta name="description" content="Personal page of LIU LI-YANG — designer, engineer, creator." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;500&display=swap"
     rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,6 +19,11 @@
   <!-- Decorative layers -->
   <div class="noise-overlay" aria-hidden="true"></div>
   <div class="gradient-blob" aria-hidden="true"></div>
+  <div class="bg-canvas" aria-hidden="true"></div>
+  <div class="orb orb1" aria-hidden="true"></div>
+  <div class="orb orb2" aria-hidden="true"></div>
+  <div class="orb orb3" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
 
   <!-- Header -->
   <header id="site-header">
@@ -35,23 +36,54 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
+  <!-- Main Content -->
+  <main>
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar-inner">LY</div>
+      </div>
+
       <div class="title-container">
         <h1 class="first-name">LIU</h1>
         <h1 class="last-name">LI-YANG</h1>
-        <span class="floating-text">designer &amp; creator</span>
+        <span class="floating-text">designer & creator</span>
+      </div>
+
+      <p class="tagline">Designer · Engineer · Creator</p>
+      <div class="divider"></div>
+
+      <p class="bio">
+        Passionate about crafting elegant digital experiences, solving complex problems, and bringing ideas to life
+        through technology and creativity.
+      </p>
+    </div>
+
+    <!-- Clock Card -->
+    <div class="clock-card">
+      <p class="clock-label">🕐 Current Time</p>
+      <div id="clock-time">00:00:00</div>
+      <div id="clock-date"></div>
+      <div class="seconds-bar-wrap">
+        <div id="seconds-bar"></div>
       </div>
     </div>
-  </section>
 
-  <!-- Time Badge -->
-  <div class="time-container" id="time-badge">
-    <span class="time-label">Current Time</span>
-    <span class="time-value" id="current-time">--:--:-- --</span>
-    <span class="time-date" id="current-date"></span>
-  </div>
+    <!-- Pills -->
+    <div class="pills">
+      <div class="pill"><span class="pill-dot" style="background:#A358FF;"></span>IoT Developer</div>
+      <div class="pill"><span class="pill-dot" style="background:#06b6d4;"></span>Web Design</div>
+      <div class="pill"><span class="pill-dot" style="background:#f43f5e;"></span>Tech Enthusiast</div>
+      <div class="pill"><span class="pill-dot" style="background:#f59e0b;"></span>Problem Solver</div>
+    </div>
+
+  </main>
+
+  <footer>
+    Crafted with <span>♥</span> by LIU LI-YANG &nbsp;·&nbsp; &copy; 2026
+  </footer>
 
   <script src="app.js"></script>
 </body>
